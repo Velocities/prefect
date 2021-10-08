@@ -50,8 +50,7 @@ def test_edge_hashes_match():
     dicts (or index a dict)
     """
 
-    t1 = Task()
-    t2 = Task()
+    t1, t2 = Task(), Task()
     e1 = Edge(t1, t2, key="a_key")
     e2 = Edge(t1, t2, key="a_key")
     assert hash(e1) == hash(e2)
@@ -60,24 +59,20 @@ def test_edge_hashes_match():
 
 def test_new_edge_objects_can_test_membership_in_flow():
     flow = Flow(name="test")
-    t1 = TaskWithKey()
-    t2 = TaskWithKey()
+    t1, t2 = TaskWithKey(), TaskWithKey()
     flow.add_edge(t1, t2, key="a_key")
 
     assert Edge(t1, t2, key="a_key") in flow.edges
 
 
 def test_edge_has_tasks_property():
-    t1 = Task()
-    t2 = TaskWithKey()
-    t3 = Task()
+    t1, t2, t3 = Task(), TaskWithKey(), Task()
     edge = Edge(t1, t2, key="a_key")
     assert edge.tasks == {t1, t2}
 
 
 def test_edge_equality():
-    t1 = Task()
-    t2 = Task()
+    t1, t2 = Task(), Task()
 
     assert Edge(t1, t2) == Edge(t1, t2)
     assert Edge(t1, t2, "key") == Edge(t1, t2, "key")
@@ -93,8 +88,7 @@ def test_object_inequality():
 
 
 def test_serialize_edge():
-    t1 = Task()
-    t2 = Task()
+    t1, t2 = Task(), Task()
     edge = Edge(t1, t2, key="key", mapped=True)
     assert edge.serialize() == dict(
         upstream_task=dict(slug=t1.slug, __version__=prefect.__version__),
